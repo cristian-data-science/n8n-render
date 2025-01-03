@@ -1,7 +1,7 @@
 # Usar la imagen base de n8n
 FROM n8nio/n8n:latest
 
-# Cambiamos a root para poder instalar paquetes del sistema
+# Cambiar a root para poder instalar paquetes del sistema
 USER root
 
 # Actualizar los repositorios e instalar Python3 y pip3 usando apk
@@ -11,10 +11,10 @@ RUN apk update && \
 # Crear un enlace simbólico para python si es necesario
 RUN ln -sf python3 /usr/bin/python
 
-# Instalar FastAPI, uvicorn y python-docx
-RUN pip3 install --no-cache-dir fastapi uvicorn python-docx
+# Instalar FastAPI, uvicorn y python-docx, sobrescribiendo las restricciones de pip
+RUN pip3 install --no-cache-dir fastapi uvicorn python-docx --break-system-packages
 
-# Volvemos al usuario 'node' para no romper la compatibilidad con n8n
+# Volver al usuario 'node' para mantener la compatibilidad con n8n
 USER node
 
 # Establecer el directorio de trabajo
@@ -28,3 +28,4 @@ RUN chmod +x start.sh
 
 # Definir el entrypoint para ejecutar el script que inicia n8n y FastAPI
 ENTRYPOINT ["./start.sh"]
+
