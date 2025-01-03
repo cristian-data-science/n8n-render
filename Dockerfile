@@ -2,4 +2,4 @@
 FROM n8nio/n8n:latest
 
 # Instalar mammoth con npm
-RUN npm install -g mammoth
+RUN npm install -g mammoth --unsafe-perm
